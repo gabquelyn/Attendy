@@ -113,13 +113,13 @@ button.eyes {
     flex-direction: column;
   }
   .form{
-    width: 70%;
+    width: 75%;
   }
   .form form{
     width: 100%;
   }
   .image {
-    width: 70%;
+    width: 100%;
   }
   .form {
     border-right: 4px #142a40 solid;

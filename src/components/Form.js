@@ -4,7 +4,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { BiShow } from "react-icons/bi";
 import { BiHide } from "react-icons/bi";
-import image from "../assets/25.png";
+import image from "../assets/image.png";
 import { useState } from "react";
 import { email } from "../util/validators";
 const Form = () => {
