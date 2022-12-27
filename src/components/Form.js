@@ -6,20 +6,53 @@ import { BiShow } from "react-icons/bi";
 import { BiHide } from "react-icons/bi";
 import image from "../assets/25.png";
 import { useState } from "react";
-import { BsKeyFill} from "react-icons/bs";
+import { email } from "../util/validators";
 const Form = () => {
+
+
+  const validityStatus = {
+    email: true,
+    password: true,
+    finalPassword: true
+  }
+
   const [passwordValue, setPasswordValue] = useState({
     firstTrial: "",
-    firstTrialIsVisible: false,
+    trialIsVisible: false,
     secondTrial: "",
-    secondTrialIsVisible: false,
   });
 
+  const [finalPassword, setFinalPassword] = useState(true);
+
+  const [touched, setTouched] = useState({
+    email: false,
+    password: false,
+    confirmPassword: false,
+  });
+
+  
+  const [emailValue, setEmailValue] = useState("");
+
+  //All blur handlers
+  const emailBlurHandler = () => {
+    setTouched((prevState) => ({ ...prevState, email: true }));
+  };
+  const setPasswordBlur = () => {
+    setTouched((prevState) => ({ ...prevState, password: true }));
+  };
+
+  const setSecondPasswordBlurHandler = () => {
+    setTouched((prevState) => ({ ...prevState, confirmPassword: true }));
+  };
+
+  //password setting states
   const firstPasswordHandler = (event) => {
     setPasswordValue((prevState) => ({
       ...prevState,
       firstTrial: event.target.value,
     }));
+    const status = event.target.value === passwordValue.secondTrial;
+    setFinalPassword(status)
   };
 
   const secondPasswordHandler = (event) => {
@@ -27,23 +60,38 @@ const Form = () => {
       ...prevState,
       secondTrial: event.target.value,
     }));
+    const status = passwordValue.firstTrial === event.target.value;
+    setFinalPassword(status)
   };
 
-  const firstVisibleHandler = (event) => {
+  const emailChangeHandler = (event) => {
+    setEmailValue(event.target.value);
+  };
+
+
+  //toggle the input form password to text
+  const passwordVisibleHandler = (event) => {
     event.preventDefault();
     setPasswordValue((prevState) => ({
       ...prevState,
-      firstTrialIsVisible: !prevState.firstTrialIsVisible,
+      trialIsVisible: !prevState.trialIsVisible,
     }));
   };
 
-  const secondVisibleHandler = (event) => {
-    event.preventDefault();
-    setPasswordValue((prevState) => ({
-      ...prevState,
-      secondTrialIsVisible: !prevState.secondTrialIsVisible,
-    }));
-  };
+  const isValidEmail = email(emailValue);
+  
+ 
+
+  if(touched.email && !isValidEmail){
+    validityStatus.email = false;
+  }
+  if(!passwordValue.firstTrial && touched.password){
+    validityStatus.password = false;
+  }
+
+  
+  // const validConfirmPassword = touched.confirmPassword && !validityStatus.finalPassword
+  // console.log(finalPassword)
 
   return (
     <div className={classes.form}>
@@ -51,38 +99,50 @@ const Form = () => {
         <img src={image} alt="welcome" />
       </div>
       <form autoComplete="off">
+        <h3>Sign up</h3>
         <div>
-          <MdEmail style={{ color: "#142A40", fontSize: "14px" }} />
-          <input id="email" type="email" placeholder="Your Email" />
+          <MdEmail
+            style={{ color: "#142A40", fontSize: "14px", marginRight: "6px" }}
+          />
+          <input
+            id="email"
+            type="email"
+            placeholder="Your Email"
+            onBlur={emailBlurHandler}
+            onChange={emailChangeHandler}
+            value={emailValue}
+            className = {!validityStatus.email ? classes.error : ""}
+          />
         </div>
         <div>
-          <RiLockPasswordFill style={{ color: "#142A40", fontSize: "14px" }} />
+          <RiLockPasswordFill
+            style={{ color: "#142A40", fontSize: "14px", marginRight: "6px" }}
+          />
           <input
             id="password"
             value={passwordValue.firstTrial}
-            type={passwordValue.firstTrialIsVisible ? "text" : "password"}
+            type={passwordValue.trialIsVisible ? "text" : "password"}
             placeholder="password"
             onChange={firstPasswordHandler}
+            className = {!validityStatus.password ? classes.error : ""}
+            onBlur={setPasswordBlur}
           />
-          <button className={classes.eyes} onClick={firstVisibleHandler}>
-            {passwordValue.firstTrialIsVisible ? (
-              <BiShow style={{ color: "#142A40" }} />
-            ) : (
-              <BiHide style={{ color: "#ccc" }} />
-            )}
-          </button>
         </div>
         <div>
-          <RiLockPasswordLine style={{ color: "#142A40", fontSize: "14px" }} />
+          <RiLockPasswordLine
+            style={{ color: "#142A40", fontSize: "14px", marginRight: "6px" }}
+          />
           <input
             id="repeat password"
             value={passwordValue.secondTrial}
-            type={passwordValue.secondTrialIsVisible ? "text" : "password"}
+            type={passwordValue.trialIsVisible ? "text" : "password"}
             placeholder="Repeat your password"
             onChange={secondPasswordHandler}
+            onBlur={setSecondPasswordBlurHandler}
+            className = {!finalPassword? classes.error : ""}
           />
-          <button className={classes.eyes} onClick={secondVisibleHandler}>
-            {passwordValue.secondTrialIsVisible ? (
+          <button className={classes.eyes} onClick={passwordVisibleHandler}>
+            {passwordValue.trialIsVisible ? (
               <BiShow style={{ color: "#142A40" }} />
             ) : (
               <BiHide style={{ color: "#ccc" }} />
@@ -92,7 +152,7 @@ const Form = () => {
         <section>
           <p>Already have an account?</p>
           <button type="Submit" className={classes.submit}>
-            <BsKeyFill style={{ fontSize: "18px" }} />
+            Register
           </button>
         </section>
       </form>

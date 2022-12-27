@@ -21,6 +21,10 @@
   object-fit: cover;
 }
 
+.form form{
+  width: 50%;
+}
+
 .form form input {
   padding: 0.6rem;
   outline: none;
@@ -30,10 +34,27 @@
   color: #142a40;
   font-size: 14px;
   background-color: transparent;
+  width: 100%;
+}
+
+.form h3{
+  color: #142a40;
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
 
 .form form input::placeholder {
   color: #ccc;
+}
+
+.form form input:focus{
+  border-bottom: 2px solid #142a40;
+}
+
+.form form input.error{
+  border-bottom: 2px solid #f18805;
+  background-color: #EFEEEC;
 }
 
 .form form > div {
@@ -53,13 +74,15 @@ button.eyes {
   background-color: #142a40;
   outline: none;
   border: none;
-  padding: 0.3rem 1.2rem;
+  padding: 0.3rem 1rem;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  font-family: "Poppins", sans-serif;
   transition: 0.3s ease-in-out;
+  font-size: 10px;
 }
 
 .submit:hover {
@@ -77,12 +100,15 @@ button.eyes {
 .form section p {
   text-decoration: underline;
   font-family: "Poppins", sans-serif;
-  font-size: 8px;
+  font-size: 10px;
 }
 
 @media screen and (max-width: 600px) {
   .form {
     flex-direction: column;
+  }
+  .form form{
+    width: 100%;
   }
   .image {
     width: 100%;
