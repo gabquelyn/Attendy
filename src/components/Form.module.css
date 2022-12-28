@@ -91,7 +91,7 @@ button.eyes {
 }
 
 .submit:hover {
-  background-color: #284764;
+  background-color: #114468;
 }
 
 .form section {
@@ -102,10 +102,11 @@ button.eyes {
   padding: 5px;
 }
 
-.form section p {
+.link {
   text-decoration: underline;
   font-family: "Poppins", sans-serif;
   font-size: 10px;
+  color:#142a40;
 }
 
 @media screen and (max-width: 600px) {

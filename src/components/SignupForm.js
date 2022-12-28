@@ -7,7 +7,8 @@ import { BiHide } from "react-icons/bi";
 import image from "../assets/image.png";
 import { useState } from "react";
 import { email } from "../util/validators";
-const Form = () => {
+import { Link } from "react-router-dom";
+const SignupForm = () => {
 
 
   const validityStatus = {
@@ -150,7 +151,7 @@ const Form = () => {
           </button>
         </div>
         <section>
-          <p>Already have an account?</p>
+          <Link className = {classes.link} to = "/">Already have an account?</Link>
           <button type="Submit" className={classes.submit}>
             Register
           </button>
@@ -160,4 +161,4 @@ const Form = () => {
   );
 };
 
-export default Form;
+export default SignupForm;
